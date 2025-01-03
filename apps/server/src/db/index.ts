@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
+dotenv.config()
 
-dotenv.config();
 
 async function connectDB() {
     try {

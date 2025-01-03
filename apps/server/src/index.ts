@@ -1,10 +1,10 @@
 import express from 'express'
-import dotenv from 'dotenv'
 import userRouter from './routes/userRoute'
 import contentRouter from './routes/contentRoute'
+import dotenv from 'dotenv'
 dotenv.config()
 
-const port = process.env.PORT || 4000
+const port  = process.env.PORT
 const app = express()
 export const jwt_pass = process.env.JWT_SECRET
 
