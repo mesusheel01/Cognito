@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+      /* Language and Environment */
+      "target": "es2016",                                  /* JavaScript language version. */
+      "module": "commonjs",                                /* Module system to use. */
+      "rootDir": "./src",                                  /* Source folder. */
+      "outDir": "./dist",                                  /* Output folder for compiled files. */
+      "esModuleInterop": true,                             /* Ease support for CommonJS modules. */
+      "forceConsistentCasingInFileNames": true,            /* Enforce consistent file naming. */
+      "strict": true,                                      /* Enable strict type-checking. */
+
+      /* Type Checking */
+      "skipLibCheck": true                                 /* Skip checking of declaration files. */
+    },
+    "include": [
+    "./src/**/*",
+  ],                            /* Include all files in the 'src' folder. */
+    "exclude": ["node_modules", "dist"]                    /* Exclude these folders. */
+  }
+  
