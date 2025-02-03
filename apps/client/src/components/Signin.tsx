@@ -29,7 +29,7 @@ const Signin = () => {
                         value={username}
                         placeholder="Sus Daimon..."
                         onChange={(e)=>setUsername(e.target.value)}
-                        className="bg-transparent text-myBlue text-opacity-10 border-b border-black"
+                        className="bg-transparent text-myBlue border-b border-black"
                         />
                     </div>
                     <div>
