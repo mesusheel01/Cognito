@@ -10,10 +10,6 @@ const Signup = () => {
     const [email, setEmail] = useRecoilState(emailAtom)
     const [password, setPassword] = useRecoilState(passwordAtom)
 
-    const handleSignup = (e: Event)=>{
-        e.preventDefault()
-    }
-
   return (
     <div className="bg-signBg min-h-screen">
         {/* top imgae section */}
@@ -33,7 +29,7 @@ const Signup = () => {
                         value={username}
                         placeholder="Sus Daimon..."
                         onChange={(e)=>setUsername(e.target.value)}
-                        className="bg-transparent text-black text-opacity-10 border-b border-black"
+                        className="bg-transparent text-white border-b border-black"
                         />
                     </div>
                     <div className="">
@@ -42,7 +38,7 @@ const Signup = () => {
                         value={email}
                         placeholder="Sus@Daimon..."
                         onChange={(e)=>setEmail(e.target.value)}
-                        className="bg-transparent text-black text-opacity-10 border-b border-black"
+                        className="bg-transparent text-white border-b border-black"
                         />
                     </div>
                     <div>
@@ -51,14 +47,12 @@ const Signup = () => {
                         value={password}
                         placeholder="aljsy4923yurh3"
                         onChange={(e)=>setPassword(e.target.value)}
-                    className="bg-transparent text-black text-opacity-55 border-b border-black"
+                    className="bg-transparent text-white border-b border-black"
                         />
                     </div>
-
                 </div>
-
                 <div>
-                    <SignButton title="Signup" onClick={handleSignup} />
+                    <SignButton title="Signup" routeTo='/signin' />
                 </div>
             </form>
         </div>
