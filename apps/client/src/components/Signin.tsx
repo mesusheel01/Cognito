@@ -11,7 +11,7 @@ const Signin = () => {
 
 
   return (
-    <div className="bg-signBg min-h-screen">
+    <div className="bg-backCol min-h-screen">
         {/* top imgae section */}
         <div className="flex items-center justify-center">
             <BrainOne />
@@ -21,7 +21,7 @@ const Signin = () => {
                 <div className="translate-x-10">
                     <Profile />
                 </div>
-            <form className="flex bg-myGreen font-play w-[30rem] border border-black shadow-xl gap-10 items-center h-[20rem] justify-center   rounded-xl p-2 m">
+            <form className="flex bg-myBlue font-play w-[30rem] border border-black shadow-xl gap-10 items-center h-[20rem] justify-center   rounded-xl p-2 m">
                 <div className="flex flex-col gap-8">
                     <div>
                         <input
@@ -29,7 +29,7 @@ const Signin = () => {
                         value={username}
                         placeholder="Sus Daimon..."
                         onChange={(e)=>setUsername(e.target.value)}
-                        className="bg-transparent text-myBlue text-opacity-10 border-b border-black"
+                        className="bg-transparent text-black placeholder:text-gray-300 border-b border-black"
                         />
                     </div>
                     <div>
@@ -38,7 +38,7 @@ const Signin = () => {
                         value={password}
                         placeholder="aljsy4923yurh3"
                         onChange={(e)=>setPassword(e.target.value)}
-                        className="bg-transparent text-myBlue  border-b border-black"
+                        className="bg-transparent text-black placeholder:text-gray-300 border-b border-black"
                         />
                     </div>
 
