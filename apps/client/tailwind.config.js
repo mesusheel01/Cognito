@@ -16,7 +16,8 @@ export default {
             myBlue: "#92B8DC",
             myBg:"#bcd4eb",
             buttonBg:"#ED9390",
-            signBg: "#D9D9D9"
+            signBg: "#D9D9D9",
+            Charcoal: "#36454F"
         },
         fontFamily: {
             play:['Play', 'sans-serif'],

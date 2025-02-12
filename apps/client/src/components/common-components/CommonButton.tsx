@@ -1,9 +1,12 @@
-export const CommonButton = ({title, icon}: {
+export const CommonButton = ({title, icon,onClick}: {
     title:String,
-    icon:React.ReactElement
+    icon:React.ReactElement,
+    onClick: ()=> void
 }) => {
-    return <button className={`flex text-base sm:text-lg md:text-xl items-center gap-1 sm:gap-2
-    p-0.5 sm:p-1 md:p-2 rounded-md bg-myBlue text-white hover:bg-blue-600 transition-colors duration-200
+    return <button
+        onClick={onClick}
+    className={`flex text-base sm:text-lg md:text-xl items-center gap-1 sm:gap-2
+    p-0.5 sm:p-1 md:p-2 rounded-md bg-myBlue text-Charcoal hover:bg-blue-600 transition-colors duration-200
     font-play`} >
         <div className="scale-90 sm:scale-100">
             {icon}
