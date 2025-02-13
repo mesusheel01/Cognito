@@ -1,19 +1,45 @@
-import { useRecoilState } from "recoil"
+import { useRecoilState, useSetRecoilState } from "recoil"
 import { BrainOne } from "../assets/icons/Brain"
 import { passwordAtom, usernameAtom } from "../store/atoms/credentialStore"
 import { SignButton } from "./common-components/SignButton"
 import { Profile } from "../assets/icons/Profile"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import { loadingAtom } from "../store/atoms/loadingStore"
+import { kyaSigninHaiAtom } from "../store/atoms/KyaSigninHaiStore"
 
 const Signin = () => {
 
     const [username, setUsername] = useRecoilState(usernameAtom)
     const [password, setPassword] = useRecoilState(passwordAtom)
+    const setKyaSigninHai = useSetRecoilState(kyaSigninHaiAtom)
+    const  setLoading = useSetRecoilState(loadingAtom)
+    const navigate = useNavigate()
 
+    const handleSigninClick = async (e:React.FormEvent<HTMLFormElement>)=>{
+        e.preventDefault()
+        try{
+            setLoading(true)
+            const res = await axios.post(`http://localhost:5000/api/v1/user/signin`,({username,password}))
+            if(res.data.token){
+                console.log(res.data.token)
+                localStorage.setItem("token", res.data.token)
+                setLoading(false)
+                navigate("/dashboard")
+                setKyaSigninHai(prev => !prev)
+
+            }
+        }catch(err){
+            setLoading(false)
+            console.log(err)
+
+        }
+    }
 
   return (
     <div className="bg-backCol min-h-screen">
         {/* top imgae section */}
-        <div className="flex items-center justify-center">
+        <div className="flex items-center translate-y-[6.1vh] justify-center">
             <BrainOne />
         </div>
         {/* below Signup card section */}
@@ -45,7 +71,7 @@ const Signin = () => {
                 </div>
 
                 <div>
-                    <SignButton title="Signin" routeTo={'/dashboard'} />
+                    <SignButton onClick={handleSigninClick} title="Signin" />
                 </div>
             </form>
         </div>

@@ -6,11 +6,14 @@ import LiveSearch from "./LiveSearch"
 import { useRecoilState } from "recoil"
 import { modelAtom } from "../../store/atoms/model"
 
+
 const contentTypes = ['image', 'video', 'article', 'audio']
 
 
 const Navbar = () => {
     const [isModelOpen, setIsModelOpen] = useRecoilState(modelAtom)
+
+
     const handleAddSection = () =>{
         setIsModelOpen(!isModelOpen)
         console.log(isModelOpen)
@@ -93,7 +96,7 @@ const Navbar = () => {
                             />
                         </div>
                     </div>
-                    <button className="px-12 bg-gray-400 p-2 mt-2 translate-x-12 rounded-xl hover:bg-gray-500 transition-all duration-300" >Submit</button>
+                    <button className="px-12 bg-gray-400 p-2 mt-2 translate-x-8 rounded-xl hover:bg-gray-500 transition-all duration-300" >Submit</button>
                 </form>
                 </div>
             </div>

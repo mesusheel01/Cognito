@@ -2,6 +2,7 @@ import express from 'express'
 import userRouter from './routes/userRoute'
 import contentRouter from './routes/contentRoute'
 import dotenv from 'dotenv'
+import cors from 'cors'
 dotenv.config()
 
 const port  = process.env.PORT
@@ -9,6 +10,12 @@ const app = express()
 export const jwt_pass = process.env.JWT_SECRET
 
 //to accept the req body
+app.use(cors({
+    origin: "http://localhost:5173",
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization']
+}))
 app.use(express.json())
 
 

@@ -1,28 +1,16 @@
-import { useState } from "react";
-import { IoIosArrowRoundForward } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { loadingAtom } from "../../store/atoms/loadingStore";
 
 
-export const SignButton = ({title,routeTo}:{
+export const SignButton = ({title, onClick}:{
     title:string,
-    routeTo: string
+    onClick: ()=>void
 })=>{
-    const [arrow, setArrow]= useState(false)
-    console.log(arrow)
-    const navigate = useNavigate()
+    const loading = useRecoilValue(loadingAtom)
 
-    const handleClick = ()=>{
-        setArrow(!arrow)
-        navigate(routeTo)
-    }
-    return <button onClick={handleClick}
+    return <button onClick={onClick}
         className={`bg-myGreen border border-black font-play focus:outline-none p-4 py-10 translate-y-3 rounded-xl hover:py-2  transition-all duration-300`}
     >
-        {
-            arrow && <div className="transition-all duration-500 translate-x-16 text-xl translate-y-5">
-                <IoIosArrowRoundForward />
-            </div>
-        }
-        {title}
+        {loading ? (title === 'Signin' ? "Signing in..." : "Signing up...") : title}
     </button>
 }

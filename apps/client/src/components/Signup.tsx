@@ -3,17 +3,48 @@ import { BrainOne } from "../assets/icons/Brain"
 import { emailAtom, passwordAtom, usernameAtom } from "../store/atoms/credentialStore"
 import { SignButton } from "./common-components/SignButton"
 import { Profile } from "../assets/icons/Profile"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import { loadingAtom } from "../store/atoms/loadingStore"
+import { errorAtom } from "../store/atoms/errorAtom"
 
 const Signup = () => {
 
     const [username, setUsername] = useRecoilState(usernameAtom)
     const [email, setEmail] = useRecoilState(emailAtom)
     const [password, setPassword] = useRecoilState(passwordAtom)
+    const [loading,setLoading] = useRecoilState(loadingAtom
+    )
+    const [error, setError] = useRecoilState(errorAtom)
+    const navigate = useNavigate()
+
+    const handleSignupClick = async(e : React.FormEvent<HTMLFormElement>)=>{
+        e.preventDefault()
+        try{
+            setLoading(true)
+            const res = await axios.post(`http://localhost:5000/api/v1/user/signup`,{
+                username,
+                email,
+                password
+            })
+            console.log(res)
+            if(res.data.token){
+                navigate('/signin')
+                setLoading(false)
+            }
+        }catch(err){
+            setLoading(false)
+            setError(err.message.response.data)
+            console.log(err)
+        }
+    }
+
+
 
   return (
     <div className="bg-backCol min-h-screen">
         {/* top imgae section */}
-        <div className="flex items-center justify-center">
+        <div className="flex items-center translate-y-[6.1vh] justify-center">
             <BrainOne />
         </div>
         {/* below Signup card section */}
@@ -52,9 +83,12 @@ const Signup = () => {
                     </div>
                 </div>
                 <div>
-                    <SignButton title="Signup" routeTo='/signin' />
+                    <SignButton title="Signup" onClick={handleSignupClick} />
                 </div>
             </form>
+            {
+                error && <div className=" absolute translate-y-10 text-red-500">{error}</div>
+            }
         </div>
     </div>
   )
