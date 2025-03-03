@@ -96,7 +96,7 @@ const Navbar = () => {
                             />
                         </div>
                     </div>
-                    <button className="px-12 bg-gray-400 p-2 mt-2 translate-x-8 rounded-xl hover:bg-gray-500 transition-all duration-300" >Submit</button>
+                    <button className="px-12 bg-buttonBg hover:bg-red-400 p-2 mt-2 translate-x-8 rounded-xl  transition-all duration-300" >Submit</button>
                 </form>
                 </div>
             </div>
