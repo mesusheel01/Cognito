@@ -12,11 +12,11 @@ const Sidebar = () => {
     }
 
   return (
-    <aside>
+    <aside className="transition-all duration-300">
         { IsSidebarOpen ?
-            <div className="translate-y-10 absolute top-40 bg-myGreen h-[50vh] w-[35vh] rounded-xl opacity-80 m-2 flex flex-col gap-3 justify-center items-center">
+            <div className="translate-y-10 absolute transition-all duration-300 top-40 bg-myGreen h-[40vh] w-[35vh] rounded-xl opacity-80 m-2 flex flex-col gap-3 justify-center items-center">
             {/* Section for all the types of content and user profile section */}
-            <div className="relative -top-6 left-24" onClick={()=>setIsSidebarOpen(prev=>!prev)}>
+            <div className="relative -top-1 left-24" onClick={()=>setIsSidebarOpen(prev=>!prev)}>
                 <MdKeyboardDoubleArrowLeft />
             </div>
             <LinkButton title={"Youtube"} icon={<FaYoutube />} onClick={()=>handleButtonClick("youtube")} />
@@ -26,12 +26,12 @@ const Sidebar = () => {
             <LinkButton title={"Tags"} icon={<FaHashtag />} onClick={()=>handleButtonClick("tags")} />
         </div>
         :
-        <div className="translate-y-10 flex flex-col gap-10 justify-center items-center absolute top-40 bg-myGreen h-[50vh] w-[6vh] rounded-xl opacity-80 m-2">
+        <div className="translate-y-10 flex flex-col gap-8 justify-center transition-all duration-300 items-center absolute top-40 bg-myGreen h-[40vh] w-[6vh] rounded-xl opacity-80 m-2">
             <div className="" onClick={()=>setIsSidebarOpen(prev=>!prev)}>
                 <MdKeyboardDoubleArrowRight />
             </div>
             <FaYoutube />
-             <FaXTwitter />
+            <FaXTwitter />
             <SlDocs />
             <IoLinkSharp />
             <FaHashtag />
