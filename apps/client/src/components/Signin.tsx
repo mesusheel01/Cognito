@@ -6,13 +6,13 @@ import { Profile } from "../assets/icons/Profile"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { loadingAtom } from "../store/atoms/loadingStore"
-import { kyaSigninHaiAtom } from "../store/atoms/KyaSigninHaiStore"
+import { tokenAtom } from "../store/atoms/KyaSigninHaiStore"
 
 const Signin = () => {
 
     const [username, setUsername] = useRecoilState(usernameAtom)
     const [password, setPassword] = useRecoilState(passwordAtom)
-    const setKyaSigninHai = useSetRecoilState(kyaSigninHaiAtom)
+    const setTokenValue = useSetRecoilState(tokenAtom)
     const  setLoading = useSetRecoilState(loadingAtom)
     const navigate = useNavigate()
 
@@ -26,7 +26,7 @@ const Signin = () => {
                 localStorage.setItem("token", res.data.token)
                 setLoading(false)
                 navigate("/dashboard")
-                setKyaSigninHai(prev => !prev)
+                setTokenValue(res.data.token)
 
             }
         }catch(err){

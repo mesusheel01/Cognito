@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil"
 import MainSection from "./dashbaord-components/MainSection"
 import Navbar from "./dashbaord-components/Navbar"
-import { kyaSigninHaiAtom } from "../store/atoms/KyaSigninHaiStore"
+import { tokenAtom } from "../store/atoms/KyaSigninHaiStore"
 import { useNavigate } from "react-router-dom"
 import Sidebar from "./dashbaord-components/Sidebar"
 import { useEffect } from "react"
@@ -9,12 +9,12 @@ import { useEffect } from "react"
 
 const Dashboard = () => {
 
-    const kyaSigninHai = useRecoilValue(kyaSigninHaiAtom)
+    const token = useRecoilValue(tokenAtom)
+    const localToken = localStorage.getItem('token')
     const navigate = useNavigate()
 
     useEffect(() =>{
-
-        if (!kyaSigninHai) {
+        if (!token && !localToken) {
             navigate('/')
         }
     },[])
