@@ -1,6 +1,10 @@
 # Current todos:
 
-- Firstly develope the sidebar and make it responsive.
-- Make the add content section to add content from the frontend
-- Load all the recent content on the main page - (main section logic)
-- Make the sidebar section if clicked on a specific button should load content related to it
+-| Firstly develope the sidebar and make it responsive.
+-| Make the add content section to add content from the frontend
+-| Load all the recent content on the main page - (main section logic)
+-| Make the sidebar section if clicked on a specific button should load content related to it
+-| Create the main seciton and preview the all the contents from the backend
+- Encountered some things like type specific designs for contents
+- Correct addition of contents to the backend and removal of old inavlid contents
+
