@@ -39,7 +39,7 @@ const Sidebar = () => {
     }
     console.log(contentStorage)
   return (
-    <aside className="transition-all duration-300">
+    <aside className="relative z-50 transition-all duration-300">
         { IsSidebarOpen ?
             <div className="translate-y-10 absolute transition-all duration-300 top-40 bg-myGreen h-[40vh] w-[35vh] rounded-xl opacity-80 m-2 flex flex-col gap-3 justify-center items-center">
             {/* Section for all the types of content and user profile section */}

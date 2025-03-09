@@ -7,4 +7,3 @@
 -| Create the main seciton and preview the all the contents from the backend
 - Encountered some things like type specific designs for contents
 - Correct addition of contents to the backend and removal of old inavlid contents
-

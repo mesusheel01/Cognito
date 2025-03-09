@@ -39,22 +39,19 @@ const MainSection = () => {
 
   return (
     <div>
-      {
-        loading ? <div>Loading...</div>
-        : <div>
-            {
-                contentModel.length && <div>
-                    {
-                        contentModel.map(content => (
-                            <ContentGrid content={content} />
-                        ))
-                    }
-                </div>
-            }
+      {loading ? (
+        <div>Loading...</div>
+      ) : contentModel.length ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+          {contentModel.map((content, index) => (
+            <ContentGrid key={index} content={content} />
+          ))}
         </div>
-      }
+      ) : (
+        <div>No content found.</div>
+      )}
     </div>
   );
-};
+}
 
 export default MainSection;
