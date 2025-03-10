@@ -1,14 +1,16 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { contentAtom } from "../../store/atoms/contentStore";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { loadingAtom } from "../../store/atoms/loadingStore";
 import { errorAtom } from "../../store/atoms/errorAtom";
 import { ContentGrid } from "../ContentGrid";
+import { modelAtom } from "../../store/atoms/model";
 
 const MainSection = () => {
   const [contentModel, setContentModel] = useRecoilState(contentAtom);
   const [loading, setLoading] = useRecoilState(loadingAtom);
+  const isModelOpen = useRecoilValue(modelAtom)
   const [error, setError] = useRecoilState(errorAtom);
 
   const fetchContent = async () => {
@@ -33,7 +35,7 @@ const MainSection = () => {
 
   useEffect(() => {
     fetchContent();
-  }, []);
+  }, [isModelOpen]);
 
   console.log(contentModel);
 
@@ -42,11 +44,7 @@ const MainSection = () => {
       {loading ? (
         <div>Loading...</div>
       ) : contentModel.length ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-          {contentModel.map((content, index) => (
-            <ContentGrid key={index} content={content} />
-          ))}
-        </div>
+        <ContentGrid contents={contentModel} />
       ) : (
         <div>No content found.</div>
       )}

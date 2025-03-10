@@ -28,7 +28,7 @@ const Sidebar = () => {
                 if(response.data.contents){
                     setLoading(false)
                     console.log(response.data.contents)
-                    const list = response.data.contents.filter(item => item.title.toLowerCase() === type.toLowerCase())
+                    const list = response.data.contents.filter(item => item.link.toLowerCase().includes(type.toLowerCase()))
                     setContentStorage(list)
                 }
             } catch (error) {
@@ -39,7 +39,7 @@ const Sidebar = () => {
     }
     console.log(contentStorage)
   return (
-    <aside className="relative z-50 transition-all duration-300">
+    <aside className="fixed z-50 transition-all duration-300">
         { IsSidebarOpen ?
             <div className="translate-y-10 absolute transition-all duration-300 top-40 bg-myGreen h-[40vh] w-[35vh] rounded-xl opacity-80 m-2 flex flex-col gap-3 justify-center items-center">
             {/* Section for all the types of content and user profile section */}
@@ -47,11 +47,11 @@ const Sidebar = () => {
                 <MdKeyboardDoubleArrowLeft />
             </button>
             <LinkButton title={"Youtube"} icon={<FaYoutube />} onClick={()=>handleButtonClick("youtube")} />
-            <LinkButton title={"Twitter"} icon={<FaXTwitter />} onClick={()=>handleButtonClick("twitter")} />
-            <LinkButton title={"Docs"} icon={<SlDocs />} onClick={()=>handleButtonClick("Docs")} />
+            <LinkButton title={"Twitter"} icon={<FaXTwitter />} onClick={()=>handleButtonClick("x.com")} />
+            <LinkButton title={"Docs"} icon={<SlDocs />} onClick={()=>handleButtonClick("docs")} />
             <LinkButton title={"Links"} icon={<IoLinkSharp />} onClick={()=>handleButtonClick("links")} />
             <LinkButton title={"Tags"} icon={<FaHashtag />} onClick={()=>handleButtonClick("tags")} />
-        </div>
+        </div>  
         :
         <div className="translate-y-10 flex flex-col gap-8 justify-center transition-all duration-300 items-center absolute top-40 bg-myGreen h-[40vh] w-[6vh] rounded-xl opacity-80 m-2">
             <div className="" onClick={()=>setIsSidebarOpen(prev=>!prev)}>

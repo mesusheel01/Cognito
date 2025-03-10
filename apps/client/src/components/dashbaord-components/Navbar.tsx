@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil"
 import { modelAtom } from "../../store/atoms/model"
 import { useState } from "react"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 
 const contentTypes = ['image', 'video', 'article', 'audio']
@@ -18,7 +19,6 @@ const Navbar = () => {
         title: '',
         type: '',
         link: '',
-        content: '',
         tags: ''
     })
 
@@ -33,7 +33,7 @@ const Navbar = () => {
         }))
         console.log(formData)
     }
-
+    const navigate = useNavigate()
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
@@ -59,7 +59,6 @@ const Navbar = () => {
                     title: '',
                     type: '',
                     link: '',
-                    content: '',
                     tags: ''
                 })
             }
@@ -73,14 +72,14 @@ const Navbar = () => {
         console.log(isModelOpen)
     }
     const handleShare = () =>{
-
+        //use to hit a backend which will return a url and it will be rendered on the screen and after clicking that user content will be visible to anyone with the link access.
     }
 
   return (
     <nav className="w-full px-4 py-2">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         {/* logo section - left */}
-        <div className="flex-shrink-0">
+        <div onClick={()=>window.location.reload()} className="flex-shrink-0">
           <SmallBrainOne />
         </div>
 
@@ -97,8 +96,8 @@ const Navbar = () => {
       </div>
       {
         isModelOpen && (
-          <div className="fixed transition-all duration-300 inset-0 flex items-center justify-center bg-black/50">
-            <div className="w-[400px] h-[500px] bg-myGreen rounded-lg  p-4">
+          <div className="fixed transition-all duration-300 inset-0 flex items-center justify-center z-10 bg-black/50">
+            <div className="w-[400px]  bg-myGreen rounded-lg  p-4">
                 <div className="flex justify-end items-end" onClick={()=> setIsModelOpen(!isModelOpen)}>
                     <IoMdCloseCircle  />
                 </div>
@@ -142,15 +141,6 @@ const Navbar = () => {
                                 onChange={handleInputChange}
                                 placeholder="link"
                                 className="rounded-xl w-[30vh]  p-1 px-4"
-                            />
-                        </div>
-                        <div>
-                            <textarea
-                                name="content"
-                                value={formData.content}
-                                onChange={handleInputChange}
-                                placeholder="Content.."
-                                className="rounded-xl w-[30vh] h-[18vh]  p-2 px-4"
                             />
                         </div>
                         <div>
