@@ -10,4 +10,16 @@
 -| Correct addition of contents to the backend and removal of old inavlid contents
 -| Make the content refresh after addition of new one.
 -| Make the cognito button working
-- Make the live search working ok.
+-| Make the live search working ok.
+{
+    ***content-for-ai-implementation***:{
+        - Added the AI functionality to include a button in the live Search dialog box on each content and while clicking on the content a input tag will appear and you can search anything about the content like if its a video get brief info of it.
+            - First get the API key to use it to connect to a llm.
+            - Design the button thing on each content in the dialog box.
+            -
+    }
+    ***issues-during-implementation*** :{
+        - Request limit error aa gya phle content k sath request hit marne pr
+        -
+    }
+}
