@@ -28,6 +28,7 @@ app.use('/api/v1/user', userRouter)
 //api for content
 app.use('/api/v1/content', contentRouter)
 
+app.use('/openai', )
 
 //shareable link
 
