@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil"
 import { modelAtom } from "../../store/atoms/model"
 import { useState } from "react"
 import axios from "axios"
-import { useNavigate } from "react-router-dom"
+
 
 
 const contentTypes = ['image', 'video', 'article', 'audio']
@@ -22,9 +22,6 @@ const Navbar = () => {
         tags: ''
     })
 
-
-
-
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target
         setFormData(prev => ({
@@ -33,7 +30,6 @@ const Navbar = () => {
         }))
         console.log(formData)
     }
-    const navigate = useNavigate()
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
@@ -76,7 +72,7 @@ const Navbar = () => {
     }
 
   return (
-    <nav className="w-full px-4 py-2">
+    <nav className="w-full px-4 py-2 relative z-[100] bg-white">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         {/* logo section - left */}
         <div onClick={()=>window.location.reload()} className="flex-shrink-0">

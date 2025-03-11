@@ -38,7 +38,7 @@ interface Content {
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path d="M10 16.5l6-4.5-6-4.5v9z" />
+                  <path d="M10 16.5l6-4.5-6-4.5v9   " />
                 </svg>
               </div>
             </div>
@@ -163,7 +163,7 @@ interface Content {
 
   export const ContentGrid: React.FC<{ contents: Content[] }> = ({ contents }) => {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4 relative z-0">
         {contents.map((content, index) => (
           <ContentCard key={index} content={content} />
         ))}
