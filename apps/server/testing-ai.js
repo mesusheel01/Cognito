@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 
 const client = new OpenAI({
-  apiKey: "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", // This is the default and can be omitted
+  apiKey: OPEN_AI_API_KEY, // This is the default and can be omitted
 });
 async function getAiOutput(content, searchQuery){
   const response = await client.responses.create({
