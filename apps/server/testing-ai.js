@@ -1,7 +1,11 @@
 import OpenAI from 'openai';
 
 const client = new OpenAI({
+<<<<<<< HEADgit 
   apiKey: OPEN_AI_API_KEY, // This is the default and can be omitted
+=======
+  apiKey: OPEN_AI_API_KEY // This is the default and can be omitted
+>>>>>>> f4e1e80 (Research about some ai thing!)
 });
 async function getAiOutput(content, searchQuery){
   const response = await client.responses.create({
