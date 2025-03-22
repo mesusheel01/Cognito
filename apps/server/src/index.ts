@@ -3,6 +3,7 @@ import userRouter from './routes/userRoute'
 import contentRouter from './routes/contentRoute'
 import dotenv from 'dotenv'
 import cors from 'cors'
+import openAiRouter from './routes/aiRoute'
 dotenv.config()
 
 const port  = process.env.PORT
@@ -28,7 +29,7 @@ app.use('/api/v1/user', userRouter)
 //api for content
 app.use('/api/v1/content', contentRouter)
 
-app.use('/openai', )
+app.use('/api/ai', openAiRouter)
 
 //shareable link
 

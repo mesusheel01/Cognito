@@ -1,25 +1,46 @@
-import OpenAI from 'openai';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const client = new OpenAI({
-<<<<<<< HEADgit 
-  apiKey: OPEN_AI_API_KEY, // This is the default and can be omitted
-=======
-  apiKey: OPEN_AI_API_KEY // This is the default and can be omitted
->>>>>>> f4e1e80 (Research about some ai thing!)
-});
-async function getAiOutput(content, searchQuery){
-  const response = await client.responses.create({
-  model: 'gpt-4o',
-  instructions: "You are provided with a url, doc, or twitter related thing act as a genuis and give the best and short output for the input}",
-  input: `${content} ${searchQuery} `});
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-console.log(response)
+async function getGeminiOutput(content, searchQuery) {
+  try {
+    const genAI = new GoogleGenerativeAI(
+      process.env.GOOGLE_APPLICATION_CREDENTIALS // Pass the path to the JSON key file
+    );
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+    const prompt = `Instructions: ${searchQuery}\nContent: ${content}\nProvide a brief analysis.`;
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+    return text;
+
+  } catch (error) {
+    console.error('Gemini Error:', error);
+    throw error;
+  }
 }
+
 const content = {
-  createdAt: "2025-03-09T20:08:59.069Z",
-  link: "https://www.youtube.com/watch?v=S2mkcXrYjT4",
-  tags: ['67cdf55ac174dd0fe6db336b'],
-  title: "youtube",
-  type : "video"
+    createdAt: "2025-03-09T20:08:59.069Z",
+    link: "https://www.youtube.com/watch?v=S2mkcXrYjT4",
+    tags: ['67cdf55ac174dd0fe6db336b'],
+    title: "youtube",
+    type : "video"
+  }
+
+async function main() {
+  try {
+      const aiResponse = await getGeminiOutput(
+          JSON.stringify(content),
+          "Give the brief about the video!"
+      );
+      console.log(aiResponse);
+  } catch (error) {
+      console.error("Failed to get Gemini output:", error);
+  }
 }
-getAiOutput(content, "Give the brief about this video")
+
+main();
