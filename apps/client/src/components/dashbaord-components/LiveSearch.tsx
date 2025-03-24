@@ -87,7 +87,7 @@ const LiveSearch = () => {
 
             {/* Search Results Dropdown */}
             {showResults && filteredResults.length > 0 && (
-                <div className="fixed left-1/2 transform -translate-x-1/2 w-full max-w-xl mt-1 bg-myGreen opacity-90 rounded-xl shadow-xl border border-gray-200 max-h-[400px] overflow-y-auto z-[9999]">
+                <div className="fixed left-1/2 transform -translate-x-1/2 w-full max-w-xl mt-1 bg-gray-200 opacity-90 rounded-xl shadow-xl border border-gray-200 max-h-[400px] overflow-y-auto z-[9999]">
                     {filteredResults.map((result, index) => (
                         <div
                             key={index}

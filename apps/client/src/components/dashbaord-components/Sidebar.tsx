@@ -51,17 +51,17 @@ const Sidebar = () => {
             <LinkButton title={"Docs"} icon={<SlDocs />} onClick={()=>handleButtonClick("docs")} />
             <LinkButton title={"Links"} icon={<IoLinkSharp />} onClick={()=>handleButtonClick("links")} />
             <LinkButton title={"Tags"} icon={<FaHashtag />} onClick={()=>handleButtonClick("tags")} />
-        </div>  
+        </div>
         :
         <div className="translate-y-10 flex flex-col gap-8 justify-center transition-all duration-300 items-center absolute top-40 bg-myGreen h-[40vh] w-[6vh] rounded-xl opacity-80 m-2">
             <div className="" onClick={()=>setIsSidebarOpen(prev=>!prev)}>
                 <MdKeyboardDoubleArrowRight />
             </div>
-            <FaYoutube />
-            <FaXTwitter />
-            <SlDocs />
-            <IoLinkSharp />
-            <FaHashtag />
+            <FaYoutube onClick={()=>handleButtonClick("youtube")} />
+            <FaXTwitter onClick={()=>handleButtonClick("x.com")} />
+            <SlDocs onClick={()=>handleButtonClick("docs")} />
+            <IoLinkSharp onClick={()=>handleButtonClick("links")} />
+            <FaHashtag onClick={()=>handleButtonClick("tags")} />
         </div>
         }
 
@@ -78,7 +78,7 @@ interface propType{
 const LinkButton = (props: propType)=>{
     return <button
         onClick={props.onClick}
-    className="flex  gap-12 bg-white p-2 rounded-xl w-[30vh]">
+    className="flex  gap-12 bg-white hover:bg-gray-500 p-2 rounded-xl w-[30vh]">
         <div className="translate-y-1 translate-x-1">{props.icon}</div>
         <div>{props.title}</div>
         </button>

@@ -3,11 +3,9 @@ dotenv.config();
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 async function getGeminiOutput(content, searchQuery) {
   try {
-    const genAI = new GoogleGenerativeAI(
-      process.env.GOOGLE_APPLICATION_CREDENTIALS // Pass the path to the JSON key file
-    );
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     const prompt = `Instructions: ${searchQuery}\nContent: ${content}\nProvide a brief analysis.`;

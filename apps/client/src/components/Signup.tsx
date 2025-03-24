@@ -7,6 +7,9 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { loadingAtom } from "../store/atoms/loadingStore"
 import { errorAtom } from "../store/atoms/errorAtom"
+import { useState } from "react"
+import { IoEyeOff } from "react-icons/io5"
+import { FaRegEye } from "react-icons/fa"
 
 const Signup = () => {
 
@@ -15,6 +18,7 @@ const Signup = () => {
     const [password, setPassword] = useRecoilState(passwordAtom)
     const [loading,setLoading] = useRecoilState(loadingAtom
     )
+    const [isPassText, setIsPassText] = useState(false)
     const [error, setError] = useRecoilState(errorAtom)
     const navigate = useNavigate()
 
@@ -72,14 +76,17 @@ const Signup = () => {
                         className="bg-transparent text-black placeholder:text-gray-300 border-b border-black"
                         />
                     </div>
-                    <div>
+                    <div className="relative">
                         <input
-                        type="password"
+                        type={isPassText?"text":"password"}
                         value={password}
                         placeholder="aljsy4923yurh3"
                         onChange={(e)=>setPassword(e.target.value)}
                     className="bg-transparent text-black border-b border-black placeholder:text-gray-300"
-                        />
+                    />
+                        {
+                            isPassText ? <FaRegEye className="absolute top-1 left-40" onClick={()=>setIsPassText(!isPassText)} /> : <IoEyeOff className="absolute top-1 left-40" onClick={()=> setIsPassText(!isPassText)} />
+                        }
                     </div>
                 </div>
                 <div>

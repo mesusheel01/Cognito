@@ -7,6 +7,9 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { loadingAtom } from "../store/atoms/loadingStore"
 import { tokenAtom } from "../store/atoms/KyaSigninHaiStore"
+import { IoEyeOff } from "react-icons/io5"
+import { useState } from "react"
+import { FaRegEye } from "react-icons/fa"
 
 const Signin = () => {
 
@@ -14,6 +17,7 @@ const Signin = () => {
     const [password, setPassword] = useRecoilState(passwordAtom)
     const setTokenValue = useSetRecoilState(tokenAtom)
     const  setLoading = useSetRecoilState(loadingAtom)
+    const [isPassText, setIsPassText] = useState(false)
     const navigate = useNavigate()
 
     const handleSigninClick = async (e:React.FormEvent<HTMLFormElement>)=>{
@@ -58,14 +62,17 @@ const Signin = () => {
                         className="bg-transparent text-black placeholder:text-gray-300 border-b border-black"
                         />
                     </div>
-                    <div>
+                    <div className="relative">
                         <input
-                        type="password"
+                        type={isPassText?"text":"password"}
                         value={password}
                         placeholder="aljsy4923yurh3"
                         onChange={(e)=>setPassword(e.target.value)}
                         className="bg-transparent text-black placeholder:text-gray-300 border-b border-black"
                         />
+                        {
+                            isPassText ? <FaRegEye className="absolute top-1 left-40" onClick={()=>setIsPassText(!isPassText)} /> : <IoEyeOff className="absolute top-1 left-40" onClick={()=> setIsPassText(!isPassText)} />
+                        }
                     </div>
 
                 </div>
