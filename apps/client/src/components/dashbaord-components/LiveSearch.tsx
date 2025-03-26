@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { useRecoilValue } from "recoil";
 import { contentAtom } from "../../store/atoms/contentStore";
+import { WiStars } from "react-icons/wi";
 
 interface Content {
   title: string;
@@ -63,6 +64,9 @@ const LiveSearch = () => {
         setShowResults(false);
         setSearchQuery("");
     };
+    const handleAiClick = async(content:contentType)=>{
+
+    }
 
     return (
         <div className="relative max-w-xl mx-auto">
@@ -87,12 +91,13 @@ const LiveSearch = () => {
 
             {/* Search Results Dropdown */}
             {showResults && filteredResults.length > 0 && (
-                <div className="fixed left-1/2 transform -translate-x-1/2 w-full max-w-xl mt-1 bg-gray-200 opacity-90 rounded-xl shadow-xl border border-gray-200 max-h-[400px] overflow-y-auto z-[9999]">
+                <div className="fixed left-1/2 transform -translate-x-1/2 w-[800px] mt-1 bg-gray-200 rounded-xl shadow-xl border border-gray-200 max-h-[400px] p-2  overflow-y-auto z-[9999]">
                     {filteredResults.map((result, index) => (
+                    <div className="flex px-3 gap-3 justify-between">
                         <div
                             key={index}
                             onClick={() => handleResultClick(result.link)}
-                            className="p-3 hover:bg-gray-100 cursor-pointer border-b last:border-b-0"
+                            className="p-3 hover:bg-gray-100 w-full rounded-xl cursor-pointer border-b last:border-b-0"
                         >
                             <div className="flex items-center gap-2">
                                 {/* Icon based on content type */}
@@ -113,6 +118,12 @@ const LiveSearch = () => {
                                     ))}
                                 </div>
                             )}
+                            </div>
+                            <button
+                            onClick={()=>handleAiClick(result)}
+                            className="flex m-auto hover:bg-pink-200 transition-all duration-500 bg-myBlue px-3 py-2 rounded-xl">
+                                <WiStars className="text-2xl transition-all hover:rotate-180 duration-500" />
+                            </button>
                         </div>
                     ))}
                 </div>
@@ -120,7 +131,7 @@ const LiveSearch = () => {
 
             {/* No Results Message */}
             {showResults && searchQuery && filteredResults.length === 0 && (
-                <div className="fixed left-1/2 transform -translate-x-1/2 w-full max-w-xl mt-1 bg-white rounded-xl shadow-xl border border-gray-200 p-4 text-center text-gray-500 z-[9999]">
+                <div className="fixed left-1/2 transform -translate-x-1/2 w-[800px] mt-1 bg-white rounded-xl shadow-xl border border-gray-200 p-4 text-center text-gray-500 z-[9999]">
                     No results found
                 </div>
             )}

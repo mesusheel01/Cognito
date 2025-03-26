@@ -13,6 +13,7 @@
 -| Make the live search working ok.
 -| Add the password hide and show eye **forgot😁**
 -| Add the clickable for sidebar buttons when it is not expanded
+-| Implement the design of Ai to search about the content!
 {
     ***content-for-ai-implementation***:{
         - Added the AI functionality to include a button in the live Search dialog box on each content and while clicking on the content a input tag will appear and you can search anything about the content like if its a video get brief info of it.
