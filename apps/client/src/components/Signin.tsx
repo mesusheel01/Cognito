@@ -10,6 +10,7 @@ import { tokenAtom } from "../store/atoms/KyaSigninHaiStore"
 import { IoEyeOff } from "react-icons/io5"
 import { useState } from "react"
 import { FaRegEye } from "react-icons/fa"
+import { errorAtom } from "../store/atoms/errorAtom"
 
 const Signin = () => {
 
@@ -17,6 +18,7 @@ const Signin = () => {
     const [password, setPassword] = useRecoilState(passwordAtom)
     const setTokenValue = useSetRecoilState(tokenAtom)
     const  setLoading = useSetRecoilState(loadingAtom)
+    const [error, setError]= useRecoilState(errorAtom)
     const [isPassText, setIsPassText] = useState(false)
     const navigate = useNavigate()
 
@@ -31,15 +33,18 @@ const Signin = () => {
                 setLoading(false)
                 navigate("/dashboard")
                 setTokenValue(res.data.token)
-
             }
-        }catch(err){
+            else{
+                setError(res.data?.response?.data?.msg || "Something went wrong!")
+            }
+        }catch(err:any){
+            const errorMessage = err.response?.data?.message || err.message || "Invalid credentials";
+            setError(errorMessage)
             setLoading(false)
             console.log(err)
-
         }
     }
-
+    console.log(error)
   return (
     <div className="bg-backCol min-h-screen">
         {/* top imgae section */}
@@ -51,6 +56,14 @@ const Signin = () => {
                 <div className="translate-x-10">
                     <Profile />
                 </div>
+            {/* error msg */} 
+            <div>
+            {
+                error && <div className="text-red-500 text-lg">
+                    {error}
+                </div>
+            }
+            </div>
             <form className="flex bg-myBlue font-play w-[30rem] border border-black shadow-xl gap-10 items-center h-[20rem] justify-center   rounded-xl p-2 m">
                 <div className="flex flex-col gap-8">
                     <div>

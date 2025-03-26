@@ -6,11 +6,9 @@ const signupValidator = z.object({
     username: z.string()
         .min(6, { message: "Username should be at least 6 characters!" })
         .max(11, { message: "Username should be at most 11 characters!" })
-        .regex(/[A-Z]/, { message: "Username must contain at least 1 uppercase letter!" })
         .regex(/\d/, { message: "Username must contain at least 1 numeric character!" }),
 
     password: z.string()
-        .regex(/[A-Z]/, { message: "Password must contain at least 1 uppercase letter!" })
         .regex(/\d/, { message: "Password must contain at least 1 numeric character!" })
 });
 
@@ -18,11 +16,9 @@ const signinValidator = z.object({
     username: z.string()
         .min(6, { message: "Username should be at least 6 characters!" })
         .max(11, { message: "Username should be at most 11 characters!" })
-        .regex(/[A-Z]/, { message: "Username must contain at least 1 uppercase letter!" })
         .regex(/\d/, { message: "Username must contain at least 1 numeric character!" }),
 
     password: z.string()
-        .regex(/[A-Z]/, { message: "Password must contain at least 1 uppercase letter!" })
         .regex(/\d/, { message: "Password must contain at least 1 numeric character!" })
 })
 
