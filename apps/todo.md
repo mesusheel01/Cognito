@@ -14,12 +14,13 @@
 -| Add the password hide and show eye **forgot😁**
 -| Add the clickable for sidebar buttons when it is not expanded
 -| Implement the design of Ai to search about the content!
+- Content type is diffrent in frontend and backend correct it.
 {
-    ***content-for-ai-implementation***:{
+    ***notes-for-ai-implementation***:{
         - Added the AI functionality to include a button in the live Search dialog box on each content and while clicking on the content a input tag will appear and you can search anything about the content like if its a video get brief info of it.
-            - First get the API key to use it to connect to a llm.
-            - Design the button thing on each content in the dialog box.
-            -
+            -| First get the API key to use it to connect to a llm.
+            -| Design the button thing on each content in the dialog box.
+            -  Implement the onclick handler on the frontend
     }
     ***issues-during-implementation*** :{
         - Request limit error aa gya phle content k sath request hit marne pr

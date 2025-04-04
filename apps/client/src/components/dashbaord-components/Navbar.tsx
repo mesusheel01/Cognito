@@ -10,7 +10,7 @@ import axios from "axios"
 
 
 
-const contentTypes = ['image', 'video', 'article', 'audio']
+const contentTypes = ['twitter', 'video', 'links', 'docs']
 
 
 const Navbar = () => {
@@ -80,7 +80,7 @@ const Navbar = () => {
         </div>
 
         {/* search section - center */}
-        <div className="flex-2 translate-x-16 max-w-xl mx-4 hidden sm:block">
+        <div className="flex-2 translate-x-16 max-w-xl mx-4">
           <LiveSearch />
         </div>
 

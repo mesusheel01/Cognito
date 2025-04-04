@@ -1,3 +1,5 @@
+import { WiStars } from "react-icons/wi";
+
 interface Content {
     title: string;
     type: string;
@@ -165,7 +167,14 @@ interface Content {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4 relative z-0">
         {contents.map((content, index) => (
-          <ContentCard key={index} content={content} />
+        <div>
+            <div className="">
+            <ContentCard key={index} content={content} />
+            <button>
+                <WiStars />
+            </button>
+            </div>
+          </div>
         ))}
       </div>
     );
