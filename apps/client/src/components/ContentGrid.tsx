@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { WiStars } from "react-icons/wi";
 
 interface Content {
@@ -15,6 +16,7 @@ interface Content {
   };
 
   const ContentCard = ({ content }: { content: Content }) => {
+
     // Different card designs based on content type
     if (content.type.toLowerCase() === 'video' || (content.link && content.link.includes('youtube'))) {
       const videoId = extractYouTubeId(content.link);
@@ -164,18 +166,74 @@ interface Content {
   };
 
   export const ContentGrid: React.FC<{ contents: Content[] }> = ({ contents }) => {
+    const [clickedContentId, setClickedContentId] = useState<number | null>(null);
+
+    const handleAiButtonClick = (index: number, e: React.MouseEvent) => {
+        e.stopPropagation(); // Prevent the card's onClick from triggering
+        setClickedContentId(clickedContentId === index ? null : index);
+    };
+
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4 relative z-0">
-        {contents.map((content, index) => (
-        <div>
-            <div className="">
-            <ContentCard key={index} content={content} />
-            <button>
-                <WiStars />
-            </button>
-            </div>
-          </div>
-        ))}
-      </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4 relative z-0">
+            {contents.map((content, index) => (
+                <div key={index} className="relative group">
+                    <ContentCard content={content} />
+                    {/* AI Button */}
+                    <button
+                        onClick={(e) => handleAiButtonClick(index, e)}
+                        className="absolute bottom-4 right-2 p-2 bg-myBlue text-white rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:rotate-180"
+                    >
+                        <WiStars className="text-xl" />
+                    </button>
+                    {/* Prompt Input Section - Only show for clicked content */}
+                    {clickedContentId === index && (
+                        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-lg z-50">
+                            <div className="p-3 border-t border-gray-200">
+                                <div className="flex gap-2">
+                                    <div className="flex-1">
+                                        <input
+                                            type="text"
+                                            placeholder="Enter your prompt (e.g., 'Summarize this content' or 'Explain key points')"
+                                            className="w-full px-4 py-2 rounded-lg border-2 border-gray-300 focus:border-myBlue focus:ring-1 focus:ring-myBlue transition-all duration-300 outline-none text-sm"
+                                        />
+                                    </div>
+                                    <button
+                                    onClick={()=>handleAiSearch()}
+                                    className="flex items-center gap-2 bg-gradient-to-r from-myBlue to-blue-500 hover:from-blue-500 hover:to-myBlue text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-lg">
+                                        <svg
+                                            className="w-4 h-4 animate-pulse"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                d="M13 10V3L4 14h7v7l9-11h-7z"
+                                            />
+                                        </svg>
+                                        <span>Generate</span>
+                                    </button>
+                                </div>
+                                {/* Quick prompts */}
+                                <div className="flex gap-2 mt-2 flex-wrap">
+                                    <span className="text-xs text-gray-500">Quick prompts:</span>
+                                    <button className="text-xs px-2 py-1 rounded-full bg-gray-100 hover:bg-myBlue hover:text-white transition-all duration-300">
+                                        Summarize
+                                    </button>
+                                    <button className="text-xs px-2 py-1 rounded-full bg-gray-100 hover:bg-myBlue hover:text-white transition-all duration-300">
+                                        Key points
+                                    </button>
+                                    <button className="text-xs px-2 py-1 rounded-full bg-gray-100 hover:bg-myBlue hover:text-white transition-all duration-300">
+                                        Explain
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            ))}
+        </div>
     );
   };

@@ -118,48 +118,6 @@ const LiveSearch = () => {
                                     </div>
                                 )}
                         </div>
-
-                        {/* New AI Prompt Input Section */}
-                        <div className="p-3 border-t border-gray-200">
-                            <div className="flex gap-2">
-                                <div className="flex-1">
-                                    <input
-                                        type="text"
-                                        placeholder="Enter your prompt (e.g., 'Summarize this content' or 'Explain key points')"
-                                        className="w-full px-4 py-2 rounded-lg border-2 border-gray-300 focus:border-myBlue focus:ring-1 focus:ring-myBlue transition-all duration-300 outline-none text-sm"
-                                    />
-                                </div>
-                                <button className="flex items-center gap-2 bg-gradient-to-r from-myBlue to-blue-500 hover:from-blue-500 hover:to-myBlue text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-lg">
-                                    <svg
-                                        className="w-4 h-4 animate-pulse"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M13 10V3L4 14h7v7l9-11h-7z"
-                                        />
-                                    </svg>
-                                    <span>Generate</span>
-                                </button>
-                            </div>
-                            {/* Optional: Add a suggestions row */}
-                            <div className="flex gap-2 mt-2 flex-wrap">
-                                <span className="text-xs text-gray-500">Quick prompts:</span>
-                                <button className="text-xs px-2 py-1 rounded-full bg-gray-100 hover:bg-myBlue hover:text-white transition-all duration-300">
-                                    Summarize
-                                </button>
-                                <button className="text-xs px-2 py-1 rounded-full bg-gray-100 hover:bg-myBlue hover:text-white transition-all duration-300">
-                                    Key points
-                                </button>
-                                <button className="text-xs px-2 py-1 rounded-full bg-gray-100 hover:bg-myBlue hover:text-white transition-all duration-300">
-                                    Explain
-                                </button>
-                            </div>
-                        </div>
                     </div>
                     ))}
                 </div>
