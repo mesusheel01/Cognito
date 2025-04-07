@@ -14,7 +14,7 @@ async function connectDB() {
 connectDB();
 
 // Constants
-const contentTypes = ['image', 'video', 'article', 'audio'] as const;
+const contentTypes = ['twitter', 'video', 'doc', 'link'] as const;
 const objectId = mongoose.Types.ObjectId;
 
 // User Schema

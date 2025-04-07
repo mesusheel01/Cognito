@@ -26,7 +26,7 @@ const objectIdRegex = /^[0-9a-fA-F]{24}$/;
 // contentValidator
 const contentValidator = z.object({
     link: z.string().url(),
-    type: z.enum(['image', 'video', 'article', 'audio']),
+    type: z.enum(['twitter', 'video', 'link', 'doc']),
     title: z.string(),
     tags: z.array(z.string()),
 })
