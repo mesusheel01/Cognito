@@ -1,1 +1,1 @@
-{"root":["./src/index.ts","./src/inputvalidator.ts","./src/controller/usercontroller.ts","./src/db/index.ts","./src/routes/airoute.ts","./src/routes/contentroute.ts","./src/routes/userroute.ts"],"version":"5.7.2"}
+{"root":["./src/index.ts","./src/inputvalidator.ts","./src/controller/usercontroller.ts","./src/db/index.ts","./src/routes/airoute.ts","./src/routes/contentroute.ts","./src/routes/userroute.ts","./src/utils/contentanalyzer.ts"],"version":"5.7.2"}

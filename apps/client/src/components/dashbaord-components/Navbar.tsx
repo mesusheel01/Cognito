@@ -10,7 +10,7 @@ import axios from "axios"
 
 
 
-const contentTypes = ['twitter', 'video', 'links', 'docs']
+const contentTypes = ['twitter', 'video', 'link', 'doc']
 
 
 const Navbar = () => {

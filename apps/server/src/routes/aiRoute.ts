@@ -1,46 +1,45 @@
-import { Router } from "express";
-import { userMiddleware } from "../controller/userController";
-import OpenAI from "openai";
+import  { Router } from 'express'
+import { userMiddleware } from '../controller/userController'
+import getAiResultFromContent from '../utils/contentAnalyzer.js'
+import { Types } from 'mongoose'
+import { Content } from '../db'
 
-const openAiRouter = Router();
+const aiRouter = Router()
 
-// Correct way to use middleware
-openAiRouter.use(userMiddleware as any);
+aiRouter.use(userMiddleware as unknown as string)
 
-const client = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
-
-openAiRouter.post('/', async(req, res) => {
-    const content = req.body.content;
-    const searchQuery = req.body.searchQuery;
-
+// get the ai response router
+aiRouter.post("/", async(req,res)=>{
+    const {title, prompt} = req.body
     try {
-        const response = await client.chat.completions.create({  // Changed from responses to chat.completions
-            model: 'gpt-4',  // Fixed model name from 'gpt-4o' to 'gpt-4'
-            messages: [      // Changed from instructions/input to messages format
-                {
-                    role: "system",
-                    content: "You are provided with a url, doc, or twitter related thing act as a genius and give the best and short output for the input"
-                },
-                {
-                    role: "user",
-                    content: `${content} ${searchQuery}`
-                }
-            ],
-            max_tokens: 150  // Optional: limit response length
-        });
-
+        const response = await Content.findOne({ title })
+        console.log(response)
+        if(!response){
+            res.send("No content with the given title")
+            return
+        }
+        //@ts-ignore
+        const aiResponse = await getAiResultFromContent(response.toObject(), prompt)
         res.json({
-            output: response.choices[0].message.content
-        });
+            message: aiResponse
+        })
     } catch (error) {
-        console.error('OpenAI API Error:', error);  // Added better error logging
-        res.status(500).json({  // Added proper error status code
-            message: "Error processing request",
-            error: error instanceof Error ? error.message : "Unknown error"
-        });
+        console.log(error)
+        res.json({
+            msg: error instanceof Error ? error.message : "An unknown error occurred"
+        })
     }
-});
+})
 
-export default openAiRouter;  // Added export
+// Define the Content interface
+interface Content {
+  link: string;
+  type: string;
+  title: string;
+  tags: Types.ObjectId[]; // Assuming tags are an array of ObjectId references
+  userId: Types.ObjectId; // Assuming userId is an ObjectId reference
+  createdAt?: Date; // Optional, as it is typically added by Mongoose
+  updatedAt?: Date; // Optional, as it is typically added by Mongoose
+}
+
+export default aiRouter

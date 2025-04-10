@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { WiStars } from "react-icons/wi";
+import { useRecoilState } from "recoil";
+import { aiPrompt, aiResLoading, aiResponse } from "../store/atoms/aiPromptAction";
+import axios from "axios";
+
 
 interface Content {
     title: string;
     type: string;
-    description?: string;
     image?: string;
     link?: string;
     tags?: string[];
@@ -89,7 +92,7 @@ interface Content {
       );
     }
 
-    if (content.type === 'docs') {
+    if (content.type === 'doc') {
       return (
         <div
           onClick={() => window.open(content.link, "_blank")}
@@ -117,7 +120,7 @@ interface Content {
       );
     }
 
-    if (content.type === 'links') {
+    if (content.type === 'link') {
       return (
         <div
           onClick={() => window.open(content.link, "_blank")}
@@ -167,11 +170,39 @@ interface Content {
 
   export const ContentGrid: React.FC<{ contents: Content[] }> = ({ contents }) => {
     const [clickedContentId, setClickedContentId] = useState<number | null>(null);
-
+    const [prompt, setPrompt] = useRecoilState(aiPrompt)
+    const [aiResultLoading, setAiResultLoading] = useRecoilState(aiResLoading)
+    const [aiResult, setAiResult] = useRecoilState(aiResponse)
     const handleAiButtonClick = (index: number, e: React.MouseEvent) => {
         e.stopPropagation(); // Prevent the card's onClick from triggering
         setClickedContentId(clickedContentId === index ? null : index);
     };
+
+    const handleAiSearch = async(title:string)=>{
+
+        try {
+            setAiResultLoading(true)
+            const token = localStorage.getItem('token')
+            const res = await axios.post('http://localhost:5000/api/v1/ai-result',{
+                title,
+                prompt
+            },
+        {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        })
+            if(res.data.message){
+                setAiResult(res.data.message)
+                console.log(res.data.message)
+            }
+        } catch (error) {
+            console.log('error')
+        }finally{
+            setPrompt("")
+            setAiResultLoading(false)
+        }
+    }
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4 relative z-0">
@@ -181,7 +212,7 @@ interface Content {
                     {/* AI Button */}
                     <button
                         onClick={(e) => handleAiButtonClick(index, e)}
-                        className="absolute bottom-4 right-2 p-2 bg-myBlue text-white rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:rotate-180"
+                        className="absolute bottom-4 right-2 p-2 bg-myGreen text-white rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:rotate-180"
                     >
                         <WiStars className="text-xl" />
                     </button>
@@ -193,43 +224,70 @@ interface Content {
                                     <div className="flex-1">
                                         <input
                                             type="text"
+                                            value={prompt}
+                                            onChange={(e)=>setPrompt(e.target.value)}
                                             placeholder="Enter your prompt (e.g., 'Summarize this content' or 'Explain key points')"
                                             className="w-full px-4 py-2 rounded-lg border-2 border-gray-300 focus:border-myBlue focus:ring-1 focus:ring-myBlue transition-all duration-300 outline-none text-sm"
                                         />
                                     </div>
                                     <button
-                                    onClick={()=>handleAiSearch()}
-                                    className="flex items-center gap-2 bg-gradient-to-r from-myBlue to-blue-500 hover:from-blue-500 hover:to-myBlue text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-lg">
-                                        <svg
-                                            className="w-4 h-4 animate-pulse"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M13 10V3L4 14h7v7l9-11h-7z"
-                                            />
-                                        </svg>
-                                        <span>Generate</span>
+                                    onClick={()=>handleAiSearch(content?.title)}
+                                    className="flex items-center gap-2 relative overflow-hidden px-4 py-2 rounded-lg group"
+                                    >
+                                        {/* Background with transition */}
+                                        <div className="absolute inset-0 bg-gradient-to-r from-myBlue to-blue-500 group-hover:from-blue-500 group-hover:to-myBlue transition-all duration-300"></div>
+
+                                        {/* Content */}
+                                        <div className="relative flex items-center gap-2 text-white">
+                                            <svg
+                                                className="w-4 h-4 animate-pulse"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                                                />
+                                            </svg>
+                                            <span>Generate</span>
+                                        </div>
                                     </button>
                                 </div>
                                 {/* Quick prompts */}
                                 <div className="flex gap-2 mt-2 flex-wrap">
                                     <span className="text-xs text-gray-500">Quick prompts:</span>
-                                    <button className="text-xs px-2 py-1 rounded-full bg-gray-100 hover:bg-myBlue hover:text-white transition-all duration-300">
+                                    <button onClick={()=>setPrompt('Summarize')} className="text-xs px-2 py-1 rounded-full bg-gray-100 hover:bg-myBlue hover:text-white transition-all duration-300">
                                         Summarize
                                     </button>
-                                    <button className="text-xs px-2 py-1 rounded-full bg-gray-100 hover:bg-myBlue hover:text-white transition-all duration-300">
+                                    <button onClick={()=>setPrompt('Key points')} className="text-xs px-2 py-1 rounded-full bg-gray-100 hover:bg-myBlue hover:text-white transition-all duration-300">
                                         Key points
                                     </button>
-                                    <button className="text-xs px-2 py-1 rounded-full bg-gray-100 hover:bg-myBlue hover:text-white transition-all duration-300">
+                                    <button onClick={()=>setPrompt('Explain')} className="text-xs px-2 py-1 rounded-full bg-gray-100 hover:bg-myBlue hover:text-white transition-all duration-300">
                                         Explain
                                     </button>
                                 </div>
                             </div>
+                        </div>
+                    )}
+                    {/* AI Response or Loading Indicator */}
+                    {clickedContentId === index && (
+                        <div className="mt-4 p-4 bg-gray-100 rounded-lg shadow-inner">
+                            {aiResultLoading ? (
+                                <div className="flex items-center justify-center">
+                                    <svg className="animate-spin h-5 w-5 text-gray-500" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                                    </svg>
+                                    <span className="ml-2 text-gray-500">Loading...</span>
+                                </div>
+                            ) : (
+                                <div className="text-sm text-gray-700">
+                                    {aiResult || "No AI response available."}
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
