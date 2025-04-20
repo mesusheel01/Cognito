@@ -3,6 +3,7 @@ import { WiStars } from "react-icons/wi";
 import { useRecoilState } from "recoil";
 import { aiPrompt, aiResLoading, aiResponse } from "../store/atoms/aiPromptAction";
 import axios from "axios";
+import { PiMoonStars } from "react-icons/pi";
 
 
 interface Content {
@@ -168,6 +169,47 @@ interface Content {
     );
   };
 
+  // First, create a helper function to parse numbered points
+  const parseNumberedPoints = (text: string): string[] => {
+    // Split by newlines and filter for numbered points
+    const lines = text.split('\n');
+    const points: string[] = [];
+    let currentPoint = '';
+
+    lines.forEach((line) => {
+      // Match lines starting with numbers (1., 2., etc.) or bullet points
+      const numberMatch = line.match(/^\s*(\d+\.|\•|\-)\s*(.+)/);
+      if (numberMatch) {
+        if (currentPoint) points.push(currentPoint.trim());
+        currentPoint = numberMatch[2];
+      } else if (currentPoint && line.trim()) {
+        // Append to current point if it's a continuation
+        currentPoint += ' ' + line.trim();
+      } else if (line.trim() && !currentPoint) {
+        // If it's not a numbered point but has content
+        points.push(line.trim());
+      }
+    });
+
+    // Add the last point if exists
+    if (currentPoint) points.push(currentPoint.trim());
+    return points.length ? points : [text];
+  };
+
+  // Add this component for displaying individual points
+  const AiResponsePoint: React.FC<{ point: string; index: number }> = ({ point, index }) => (
+  <div className="flex  items-start space-x-4 p-2 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 mb-3">
+    <div className="flex-shrink-0">
+      <div className="w-8 h-8 bg-gradient-to-r from-myBlue to-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+        {index + 1}
+      </div>
+    </div>
+    <div className="flex-1">
+      <p className="text-gray-700 leading-relaxed">{point}</p>
+    </div>
+  </div>
+);
+
   export const ContentGrid: React.FC<{ contents: Content[] }> = ({ contents }) => {
     const [clickedContentId, setClickedContentId] = useState<number | null>(null);
     const [prompt, setPrompt] = useRecoilState(aiPrompt)
@@ -176,6 +218,7 @@ interface Content {
     const handleAiButtonClick = (index: number, e: React.MouseEvent) => {
         e.stopPropagation(); // Prevent the card's onClick from triggering
         setClickedContentId(clickedContentId === index ? null : index);
+        setAiResult(null)
     };
 
     const handleAiSearch = async(title:string)=>{
@@ -193,7 +236,8 @@ interface Content {
             }
         })
             if(res.data.message){
-                setAiResult(res.data.message)
+                const messages = parseNumberedPoints(res.data.message)
+                setAiResult(messages.join('\n'))
                 console.log(res.data.message)
             }
         } catch (error) {
@@ -274,18 +318,59 @@ interface Content {
                     )}
                     {/* AI Response or Loading Indicator */}
                     {clickedContentId === index && (
-                        <div className="mt-4 p-4 bg-gray-100 rounded-lg shadow-inner">
+                        <div className="mt-4 bg-gray-50 rounded-xl shadow-lg overflow-hidden">
                             {aiResultLoading ? (
-                                <div className="flex items-center justify-center">
-                                    <svg className="animate-spin h-5 w-5 text-gray-500" viewBox="0 0 24 24">
-                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-                                    </svg>
-                                    <span className="ml-2 text-gray-500">Loading...</span>
+                                <div className="flex items-center justify-center p-6">
+                                    <div className="flex flex-col items-center space-y-2">
+                                        <svg className="animate-spin h-8 w-8 text-myBlue" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                                        </svg>
+                                        <span className="text-gray-500">Processing your request...</span>
+                                    </div>
+                                </div>
+                            ) : aiResult ? (
+                                <div className="p-6">
+                                    <div className="mb-4">
+                                        <h3 className="text-lg font-semibold text-gray-800 mb-2">AI Analysis</h3>
+                                        <div className="h-1 w-20 bg-gradient-to-r from-myBlue to-blue-500 rounded-full"></div>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        {parseNumberedPoints(aiResult).map((point, pointIndex) => (
+                                            <AiResponsePoint
+                                                key={pointIndex}
+                                                point={point}
+                                                index={pointIndex}
+                                            />
+                                        ))}
+                                    </div>
+
+                                    {/* Action buttons */}
+                                    <div className="mt-4 flex space-x-2">
+                                        <button
+                                            onClick={() => {navigator.clipboard.writeText(aiResult)}}
+                                            className="flex items-center px-3 py-2 text-sm text-gray-600 hover:text-gray-800 transition-colors duration-200"
+                                        >
+                                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                                            </svg>
+                                            Copy
+                                        </button>
+                                        <button
+                                            onClick={() => setAiResult('')}
+                                            className="flex items-center px-3 py-2 text-sm text-gray-600 hover:text-gray-800 transition-colors duration-200"
+                                        >
+                                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                            Clear
+                                        </button>
+                                    </div>
                                 </div>
                             ) : (
-                                <div className="text-sm text-gray-700">
-                                    {aiResult || "No AI response available."}
+                                <div className="p-6 text-center text-gray-500">
+                                    No AI response available. Try generating one!
                                 </div>
                             )}
                         </div>

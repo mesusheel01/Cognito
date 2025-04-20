@@ -33,4 +33,8 @@
 -| Create the backend route for getting the ai response and test it with postman
 -| Yeah! achievement got the ai response in the first hit, so happy
 -| lets go integrate it to frontend.
--| Make a div which when response is avalable then it will appear below the content otherwise it will show loading state 
+-| Make a div which when response is avalable then it will appear below the content otherwise it will show loading state
+-| Improved the AiSearch response view
+-| Improved the sidebar functionality and added a logout button.
+- Implement the notistack for notifications on every action.
+

@@ -9,12 +9,14 @@ import { contentAtom } from "../../store/atoms/contentStore";
 import axios from "axios";
 import { loadingAtom } from "../../store/atoms/loadingStore";
 import { errorAtom } from "../../store/atoms/errorAtom";
+import { BiLogOut } from "react-icons/bi";
 
 const Sidebar = () => {
-    const [IsSidebarOpen, setIsSidebarOpen] = useState(false)
-    const [contentStorage, setContentStorage] = useRecoilState(contentAtom)
-    const [loading, setLoading] = useRecoilState(loadingAtom)
-    const [error, setError] = useRecoilState(errorAtom)
+    const [IsSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [contentStorage, setContentStorage] = useRecoilState(contentAtom);
+    const [loading, setLoading] = useRecoilState(loadingAtom);
+    const [error, setError] = useRecoilState(errorAtom);
+
     const handleButtonClick = async(type:string)=>{
             console.log("clicked: ",type )
             try {
@@ -37,52 +39,102 @@ const Sidebar = () => {
                 console.log(error)
             }
     }
+    const handleLogout = ()=>{
+        localStorage.removeItem('token')
+        window.location.href= 'http://localhost:5173/'
+    }
     console.log(contentStorage)
   return (
-    <aside className="fixed z-50 transition-all duration-300">
-        { IsSidebarOpen ?
-            <div className="translate-y-10 absolute transition-all duration-300 top-40 bg-myGreen h-[40vh] w-[35vh] rounded-xl opacity-80 m-2 flex flex-col gap-3 justify-center items-center">
-            {/* Section for all the types of content and user profile section */}
-            <button className="relative -top-1 left-24" onClick={()=>setIsSidebarOpen(prev=>!prev)}>
-                <MdKeyboardDoubleArrowLeft />
+    <aside className="fixed left-0 top-1/2 -translate-y-1/2 z-50">
+        <div className={`
+            transition-all duration-300 ease-in-out
+            bg-myGreen rounded-r-xl opacity-80
+            flex flex-col items-center
+            ${IsSidebarOpen
+                ? 'w-[280px] p-4' // Open state
+                : 'w-[60px] p-2'   // Closed state
+            }
+        `}>
+            {/* Toggle Button */}
+            <button
+                className={`
+                    absolute top-4
+                    ${IsSidebarOpen ? 'right-4' : 'right-1/2 transform translate-x-1/2'}
+                    text-black hover:text-gray-200 transition-colors
+                `}
+                onClick={() => setIsSidebarOpen(prev => !prev)}
+            >
+                {IsSidebarOpen
+                    ? <MdKeyboardDoubleArrowLeft size={24} />
+                    : <MdKeyboardDoubleArrowRight size={24} />
+                }
             </button>
-            <LinkButton title={"Youtube"} icon={<FaYoutube />} onClick={()=>handleButtonClick("youtube")} />
-            <LinkButton title={"Twitter"} icon={<FaXTwitter />} onClick={()=>handleButtonClick("x.com")} />
-            <LinkButton title={"Docs"} icon={<SlDocs />} onClick={()=>handleButtonClick("docs")} />
-            <LinkButton title={"Links"} icon={<IoLinkSharp />} onClick={()=>handleButtonClick("links")} />
-            <LinkButton title={"Tags"} icon={<FaHashtag />} onClick={()=>handleButtonClick("tags")} />
-        </div>
-        :
-        <div className="translate-y-10 flex flex-col gap-8 justify-center transition-all duration-300 items-center absolute top-40 bg-myGreen h-[40vh] w-[6vh] rounded-xl opacity-80 m-2">
-            <div className="" onClick={()=>setIsSidebarOpen(prev=>!prev)}>
-                <MdKeyboardDoubleArrowRight />
-            </div>
-            <FaYoutube onClick={()=>handleButtonClick("youtube")} />
-            <FaXTwitter onClick={()=>handleButtonClick("x.com")} />
-            <SlDocs onClick={()=>handleButtonClick("docs")} />
-            <IoLinkSharp onClick={()=>handleButtonClick("links")} />
-            <FaHashtag onClick={()=>handleButtonClick("tags")} />
-        </div>
-        }
 
+            {/* Navigation Items */}
+            <div className="mt-10 w-full flex flex-col gap-4">
+                {IsSidebarOpen ? (
+                    // Expanded View
+                    <>
+                        <LinkButton title="Youtube" icon={<FaYoutube />} onClick={() => handleButtonClick("youtube")} />
+                        <LinkButton title="Twitter" icon={<FaXTwitter />} onClick={() => handleButtonClick("x.com")} />
+                        <LinkButton title="Docs" icon={<SlDocs />} onClick={() => handleButtonClick("docs")} />
+                        <LinkButton title="Links" icon={<IoLinkSharp />} onClick={() => handleButtonClick("links")} />
+                        <LinkButton title="Tags" icon={<FaHashtag />} onClick={() => handleButtonClick("tags")} />
+                        <LinkButton title="Logout" icon={<BiLogOut />} onClick={handleLogout} />
+                    </>
+                ) : (
+                    // Collapsed View
+                    <>
+
+                        <IconButton icon={<FaYoutube />} onClick={() => handleButtonClick("youtube")} />
+                        <IconButton icon={<FaXTwitter />} onClick={() => handleButtonClick("x.com")} />
+                        <IconButton icon={<SlDocs />} onClick={() => handleButtonClick("docs")} />
+                        <IconButton icon={<IoLinkSharp />} onClick={() => handleButtonClick("links")} />
+                        <IconButton icon={<FaHashtag />} onClick={() => handleButtonClick("tags")} />
+                        <IconButton icon={<BiLogOut />} onClick={handleLogout} />
+
+                    </>
+                )}
+            </div>
+        </div>
     </aside>
   )
 }
 
-interface propType{
-    title: String;
+interface PropType {
+    title: string;
     icon: React.ReactElement;
-    onClick: ()=> void;
+    onClick: () => void;
 }
 
-const LinkButton = (props: propType)=>{
-    return <button
-        onClick={props.onClick}
-    className="flex  gap-12 bg-white hover:bg-gray-500 p-2 rounded-xl w-[30vh]">
-        <div className="translate-y-1 translate-x-1">{props.icon}</div>
-        <div>{props.title}</div>
-        </button>
-}
+const LinkButton = ({ title, icon, onClick }: PropType) => (
+    <button
+        onClick={onClick}
+        className="
+            w-full flex items-center gap-4
+            bg-white hover:bg-gray-100
+            px-4 py-2 rounded-lg
+            transition-colors duration-200
+        "
+    >
+        <span className="text-xl">{icon}</span>
+        <span className="flex-1">{title}</span>
+    </button>
+);
 
+const IconButton = ({ icon, onClick }: { icon: React.ReactElement, onClick: () => void }) => (
+    <button
+        onClick={onClick}
+        className="
+            w-full flex justify-center
+            text-black hover:bg-white/20
+            p-2 rounded-lg
+            transition-colors duration-200
+            text-xl
+        "
+    >
+        {icon}
+    </button>
+);
 
 export default Sidebar

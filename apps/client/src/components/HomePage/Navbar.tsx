@@ -7,7 +7,7 @@ const Navbar = () => {
       {/* logo section */}
       <div className="flex m-4 justify-between items-center">
         <div>
-          <img src={logo} alt="logo" className="h-10 w-10" />
+          <img onClick={()=> window.location.reload()} src={logo} alt="logo" className="h-10 w-10" />
         </div>
         {/* user login section */}
         <div className="flex font-overpass gap-4">
