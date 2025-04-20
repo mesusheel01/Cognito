@@ -11,13 +11,13 @@
 
 
 
-### Landing page:![alt text](images-readme/image1.png)
+### Landing page:![alt text](images-readme/mainPage.png)
 
 
-### Signup page: ![alt text](images-readme/image.png)
+### Signin page: ![alt text](images-readme/signin.png)
 
 
-### Signin page:
+### Dashboard page: ![alt text](images-readme/dashboard.png)
 
 
 ### Dashboard page:
