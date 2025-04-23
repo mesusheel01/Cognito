@@ -10,13 +10,14 @@ import axios from "axios";
 import { loadingAtom } from "../../store/atoms/loadingStore";
 import { errorAtom } from "../../store/atoms/errorAtom";
 import { BiLogOut } from "react-icons/bi";
+import { useSnackbar } from "notistack";
 
 const Sidebar = () => {
     const [IsSidebarOpen, setIsSidebarOpen] = useState(false);
     const [contentStorage, setContentStorage] = useRecoilState(contentAtom);
     const [loading, setLoading] = useRecoilState(loadingAtom);
     const [error, setError] = useRecoilState(errorAtom);
-
+    const {enqueueSnackbar} = useSnackbar()
     const handleButtonClick = async(type:string)=>{
             console.log("clicked: ",type )
             try {
@@ -42,6 +43,7 @@ const Sidebar = () => {
     const handleLogout = ()=>{
         localStorage.removeItem('token')
         window.location.href= 'http://localhost:5173/'
+        enqueueSnackbar("Logged out!",{variant:"success"})
     }
     console.log(contentStorage)
   return (

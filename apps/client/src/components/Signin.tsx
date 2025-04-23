@@ -11,6 +11,7 @@ import { IoEyeOff } from "react-icons/io5"
 import { useState } from "react"
 import { FaRegEye } from "react-icons/fa"
 import { errorAtom } from "../store/atoms/errorAtom"
+import { useSnackbar } from "notistack"
 
 const Signin = () => {
 
@@ -21,6 +22,7 @@ const Signin = () => {
     const [error, setError]= useRecoilState(errorAtom)
     const [isPassText, setIsPassText] = useState(false)
     const navigate = useNavigate()
+    const {enqueueSnackbar} = useSnackbar()
 
     const handleSigninClick = async (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
@@ -33,13 +35,14 @@ const Signin = () => {
                 setLoading(false)
                 navigate("/dashboard")
                 setTokenValue(res.data.token)
+                enqueueSnackbar("Signin Successfull, redirecting to dashboard section!", {variant:"success"})
             }
             else{
                 setError(res.data?.response?.data?.msg || "Something went wrong!")
             }
         }catch(err:any){
             const errorMessage = err.response?.data?.message || err.message || "Invalid credentials";
-            setError(errorMessage)
+            enqueueSnackbar(errorMessage, {variant:'error'})
             setLoading(false)
             console.log(err)
         }
@@ -56,7 +59,7 @@ const Signin = () => {
                 <div className="translate-x-10">
                     <Profile />
                 </div>
-            {/* error msg */} 
+            {/* error msg */}
             <div>
             {
                 error && <div className="text-red-500 text-lg">

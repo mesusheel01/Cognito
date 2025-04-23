@@ -40,7 +40,7 @@ const MainSection = () => {
   console.log(contentModel);
 
   return (
-    <div>
+    <div className="translate-x-10"> 
       {loading ? (
         <div>Loading...</div>
       ) : contentModel.length ? (

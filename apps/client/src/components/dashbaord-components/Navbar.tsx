@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil"
 import { modelAtom } from "../../store/atoms/model"
 import { useState } from "react"
 import axios from "axios"
+import { enqueueSnackbar, useSnackbar } from "notistack"
 
 
 
@@ -21,7 +22,7 @@ const Navbar = () => {
         link: '',
         tags: ''
     })
-
+    const {enqueueSnackbar} = useSnackbar()
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target
         setFormData(prev => ({
@@ -57,6 +58,7 @@ const Navbar = () => {
                     link: '',
                     tags: ''
                 })
+                enqueueSnackbar("Content added successfull", {variant:"success"})
             }
         } catch (error) {
             console.error('Error submitting content:', error)

@@ -6,4 +6,4 @@
 - So lets begin solving it. || Resolved : made the aiResultModel as null in the ai button click when we use to click the ai button to hide the response it will also clear the result.
 
 ## Give the gap between sidebar and main section in the collapsed view.
-- 
+- Added translate-x-10 to move the mainSection in the dashboard page to shift right some what.

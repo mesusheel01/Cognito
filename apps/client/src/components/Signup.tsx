@@ -10,6 +10,7 @@ import { errorAtom } from "../store/atoms/errorAtom"
 import { useState } from "react"
 import { IoEyeOff } from "react-icons/io5"
 import { FaRegEye } from "react-icons/fa"
+import { useSnackbar } from "notistack"
 
 const Signup = () => {
 
@@ -21,6 +22,7 @@ const Signup = () => {
     const [isPassText, setIsPassText] = useState(false)
     const [error, setError] = useRecoilState(errorAtom)
     const navigate = useNavigate()
+    const {enqueueSnackbar} = useSnackbar()
 
     const handleSignupClick = async(e : React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
@@ -35,10 +37,12 @@ const Signup = () => {
             if(res.data.token){
                 navigate('/signin')
                 setLoading(false)
+                enqueueSnackbar("Signup successfull!", {variant:"success"})
+                enqueueSnackbar("Now signin to create your space!", {variant:"info"})
             }
         }catch(err){
             setLoading(false)
-            setError(err.message.response.data)
+            enqueueSnackbar(err.response.message.data, {variant:'error'})
             console.log(err)
         }
     }
