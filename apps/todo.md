@@ -42,4 +42,5 @@
 -| Refreshed the githubtoken for openai
 -| Added a check request for credentials in .env
 -| Add the error enquebar while signup.
+- Build the images and first of all deploy the application on vercel or any hosting web platform.
 - Write the docker-compose up for running every services in one shot.
