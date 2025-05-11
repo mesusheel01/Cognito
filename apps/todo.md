@@ -37,5 +37,9 @@
 -| Improved the AiSearch response view
 -| Improved the sidebar functionality and added a logout button.
 -| Implement the notistack for notifications on every action.
-- Create dockerfile for every serveices
+-| Create dockerfile for every serveices
+-| Corrected the input handeling!
+-| Refreshed the githubtoken for openai
+-| Added a check request for credentials in .env
+-| Add the error enquebar while signup.
 - Write the docker-compose up for running every services in one shot.

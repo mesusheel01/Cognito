@@ -7,7 +7,7 @@ const signupValidator = z.object({
         .min(6, { message: "Username should be at least 6 characters!" })
         .max(11, { message: "Username should be at most 11 characters!" })
         .regex(/\d/, { message: "Username must contain at least 1 numeric character!" }),
-
+    email:z.string().email("Invalid email address"),
     password: z.string()
         .regex(/\d/, { message: "Password must contain at least 1 numeric character!" })
 });

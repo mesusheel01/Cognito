@@ -11,6 +11,7 @@ aiRouter.use(userMiddleware as unknown as string)
 // get the ai response router
 aiRouter.post("/", async(req,res)=>{
     const {title, prompt} = req.body
+    console.log(title,prompt)
     try {
         const response = await Content.findOne({ title })
         console.log(response)

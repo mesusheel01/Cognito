@@ -73,7 +73,7 @@ export default async function getAiResultFromContent(content: Content, userPromp
         prompt = `${userPrompt || "Summarize the main points from this document."}\n\nDocument Title: ${content.title}\nDocument Content: ${contentData}`;
         break;
 
-      case 'links':
+      case 'link':
         contentData = await getWebpageContent(content.link);
         contentData = contentData.slice(0, 3000);
         prompt = `${userPrompt || "Extract the key information from this webpage."}\n\nWebpage Title: ${content.title}\nURL: ${content.link}\nContent: ${contentData}`;

@@ -33,17 +33,19 @@ const Signup = () => {
                 email,
                 password
             })
-            console.log(res)
+            // console.log(res.data)
             if(res.data.token){
                 navigate('/signin')
                 setLoading(false)
                 enqueueSnackbar("Signup successfull!", {variant:"success"})
                 enqueueSnackbar("Now signin to create your space!", {variant:"info"})
+            }else{
+                enqueueSnackbar(res.data?.data?.error?.issues?.message,{variant:'error'})
             }
-        }catch(err){
+        }catch(err: any) {
             setLoading(false)
-            enqueueSnackbar(err.response.message.data, {variant:'error'})
-            console.log(err)
+            console.log('Error response:', err.response)
+            enqueueSnackbar(err.response.data.data.error.issues[1].message,{variant:'error'})
         }
     }
 

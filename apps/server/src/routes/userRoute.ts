@@ -10,14 +10,15 @@ const userRouter = Router()
 
 userRouter.post("/signup" , async (req,res)=>{
     const bodyToValidate = req.body
-    const {success} = signupValidator.safeParse(bodyToValidate)
-    if(!success){
+    const validation = signupValidator.safeParse(bodyToValidate)
+    if(!validation.success){
         res.status(400).json({
-            msg: "Provide right inputs!"
+            msg: "Provide right inputs!",
+            data:validation
         })
         return
     }
-    const {username, password} =  bodyToValidate
+    const {username,email, password} =  bodyToValidate
     try{
         const existingUser = await User.findOne({username})
         if(existingUser){
@@ -30,6 +31,7 @@ userRouter.post("/signup" , async (req,res)=>{
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const newUser = await User.create({
             username,
+            email,
             password: hashedPassword
         })
         const token = jwt.sign({username, userId: newUser._id}, jwt_pass as string)
