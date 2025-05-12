@@ -18,7 +18,7 @@
       "persistent": true
     }
   },
-  "globalDependencies": [
+  "globalEnv": [
     "env:PORT",
     "env:MONGO_URI",
     "env:JWT_SECRET",
