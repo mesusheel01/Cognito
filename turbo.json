@@ -17,5 +17,17 @@
       "cache": false,
       "persistent": true
     }
-  }
+  },
+  "globalDependencies": [
+    "env:PORT",
+    "env:MONGO_URI",
+    "env:JWT_SECRET",
+    "env:GITHUB_TOKEN",
+    "env:OPENAI_API_KEY",
+    "env:X_BEARER_TOKEN",
+    "env:X_ACCESS_TOKEN",
+    "env:X_ACCESS_SECRET",
+    "env:X_API_KEY",
+    "env:X_API_KEY_SECRET"
+  ]
 }
