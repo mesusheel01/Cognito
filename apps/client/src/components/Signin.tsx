@@ -44,6 +44,7 @@ const Signin = () => {
             const errorMessage = err.response?.data?.message || err.message || "Invalid credentials";
             enqueueSnackbar(errorMessage, {variant:'error'})
             setLoading(false)
+            setError(err)
             console.log(err)
         }
     }
@@ -97,6 +98,9 @@ const Signin = () => {
                     <SignButton onClick={handleSigninClick} title="Signin" />
                 </div>
             </form>
+            {
+                error && <div className=" absolute translate-y-10 text-red-500">{error}</div>
+            }
         </div>
     </div>
   )

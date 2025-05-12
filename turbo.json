@@ -1,10 +1,18 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
-  "tasks": {
+  "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "inputs": [
+        "src/**/*.tsx",
+        "src/**/*.ts",
+        "src/**/*.js",
+        "src/**/*.jsx",
+        ".env*",
+        "package.json",
+        "tsconfig.json"
+      ],
       "outputs": ["dist/**", "!.next/cache/**"]
     },
     "lint": {
@@ -19,15 +27,15 @@
     }
   },
   "globalEnv": [
-    "env:PORT",
-    "env:MONGO_URI",
-    "env:JWT_SECRET",
-    "env:GITHUB_TOKEN",
-    "env:OPENAI_API_KEY",
-    "env:X_BEARER_TOKEN",
-    "env:X_ACCESS_TOKEN",
-    "env:X_ACCESS_SECRET",
-    "env:X_API_KEY",
-    "env:X_API_KEY_SECRET"
+    "PORT",
+    "MONGO_URI",
+    "JWT_SECRET",
+    "GITHUB_TOKEN",
+    "OPENAI_API_KEY",
+    "X_BEARER_TOKEN",
+    "X_ACCESS_TOKEN",
+    "X_ACCESS_SECRET",
+    "X_API_KEY",
+    "X_API_KEY_SECRET"
   ]
 }

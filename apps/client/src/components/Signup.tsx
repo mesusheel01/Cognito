@@ -38,6 +38,7 @@ const Signup = () => {
                 enqueueSnackbar(res.data?.data?.error?.issues?.message,{variant:'error'})
             }
         }catch(err: any) {
+            setError(err)
             console.log('Error response:', err.response)
             enqueueSnackbar(err.response.data.data.error.issues[1].message,{variant:'error'})
         }
