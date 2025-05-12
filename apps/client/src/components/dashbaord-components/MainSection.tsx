@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { contentAtom } from "../../store/atoms/contentStore";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loadingAtom } from "../../store/atoms/loadingStore";
-import { errorAtom } from "../../store/atoms/errorAtom";
 import { ContentGrid } from "../ContentGrid";
 import { modelAtom } from "../../store/atoms/model";
 
@@ -11,7 +10,6 @@ const MainSection = () => {
   const [contentModel, setContentModel] = useRecoilState(contentAtom);
   const [loading, setLoading] = useRecoilState(loadingAtom);
   const isModelOpen = useRecoilValue(modelAtom)
-  const [error, setError] = useRecoilState(errorAtom);
 
   const fetchContent = async () => {
     try {
@@ -25,8 +23,8 @@ const MainSection = () => {
       if (res.data.contents) {
         setContentModel(res.data.contents);
       }
-    } catch (err) {
-      setError(err);
+    } catch (err)
+    {
       console.error("Error fetching content:", err);
     } finally {
       setLoading(false);
@@ -40,7 +38,7 @@ const MainSection = () => {
   console.log(contentModel);
 
   return (
-    <div className="translate-x-10"> 
+    <div className="translate-x-10">
       {loading ? (
         <div>Loading...</div>
       ) : contentModel.length ? (

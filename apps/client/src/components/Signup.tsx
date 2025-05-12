@@ -5,7 +5,6 @@ import { SignButton } from "./common-components/SignButton"
 import { Profile } from "../assets/icons/Profile"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-import { loadingAtom } from "../store/atoms/loadingStore"
 import { errorAtom } from "../store/atoms/errorAtom"
 import { useState } from "react"
 import { IoEyeOff } from "react-icons/io5"
@@ -17,17 +16,14 @@ const Signup = () => {
     const [username, setUsername] = useRecoilState(usernameAtom)
     const [email, setEmail] = useRecoilState(emailAtom)
     const [password, setPassword] = useRecoilState(passwordAtom)
-    const [loading,setLoading] = useRecoilState(loadingAtom
-    )
     const [isPassText, setIsPassText] = useState(false)
     const [error, setError] = useRecoilState(errorAtom)
     const navigate = useNavigate()
     const {enqueueSnackbar} = useSnackbar()
 
-    const handleSignupClick = async(e : React.FormEvent<HTMLFormElement>)=>{
+    const handleSignupClick = async(e : React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault()
         try{
-            setLoading(true)
             const res = await axios.post(`http://localhost:5000/api/v1/user/signup`,{
                 username,
                 email,
@@ -36,14 +32,12 @@ const Signup = () => {
             // console.log(res.data)
             if(res.data.token){
                 navigate('/signin')
-                setLoading(false)
                 enqueueSnackbar("Signup successfull!", {variant:"success"})
                 enqueueSnackbar("Now signin to create your space!", {variant:"info"})
             }else{
                 enqueueSnackbar(res.data?.data?.error?.issues?.message,{variant:'error'})
             }
         }catch(err: any) {
-            setLoading(false)
             console.log('Error response:', err.response)
             enqueueSnackbar(err.response.data.data.error.issues[1].message,{variant:'error'})
         }

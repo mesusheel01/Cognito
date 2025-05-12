@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil"
 import { modelAtom } from "../../store/atoms/model"
 import { useState } from "react"
 import axios from "axios"
-import { enqueueSnackbar, useSnackbar } from "notistack"
+import { useSnackbar } from "notistack"
 
 
 

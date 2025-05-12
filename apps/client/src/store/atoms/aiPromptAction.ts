@@ -12,5 +12,5 @@ export const aiResLoading = atom({
 
 export const aiResponse = atom({
     key:"ai-response",
-    default: null
+    default: ""
 })

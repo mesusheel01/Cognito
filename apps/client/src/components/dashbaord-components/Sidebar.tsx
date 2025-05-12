@@ -7,21 +7,24 @@ import { SlDocs } from "react-icons/sl";
 import { useRecoilState } from "recoil";
 import { contentAtom } from "../../store/atoms/contentStore";
 import axios from "axios";
-import { loadingAtom } from "../../store/atoms/loadingStore";
-import { errorAtom } from "../../store/atoms/errorAtom";
 import { BiLogOut } from "react-icons/bi";
 import { useSnackbar } from "notistack";
+
+
+interface Content {
+    title: string;
+    type: string;
+    link: string;
+    tags?: string[];
+  }
 
 const Sidebar = () => {
     const [IsSidebarOpen, setIsSidebarOpen] = useState(false);
     const [contentStorage, setContentStorage] = useRecoilState(contentAtom);
-    const [loading, setLoading] = useRecoilState(loadingAtom);
-    const [error, setError] = useRecoilState(errorAtom);
     const {enqueueSnackbar} = useSnackbar()
     const handleButtonClick = async(type:string)=>{
             console.log("clicked: ",type )
             try {
-                setLoading(true)
                 const token = localStorage.getItem("token")
                 const response = await axios.get('http://localhost:5000/api/v1/content/',{
                     headers:{
@@ -29,14 +32,11 @@ const Sidebar = () => {
                     }
                 })
                 if(response.data.contents){
-                    setLoading(false)
                     console.log(response.data.contents)
-                    const list = response.data.contents.filter(item => item.link.toLowerCase().includes(type.toLowerCase()))
+                    const list = response.data.contents.filter((item:Content) => item.link.toLowerCase().includes(type.toLowerCase()))
                     setContentStorage(list)
                 }
             } catch (error) {
-                setLoading(false)
-                setError(error)
                 console.log(error)
             }
     }

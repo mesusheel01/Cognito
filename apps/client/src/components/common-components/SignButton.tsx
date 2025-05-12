@@ -1,11 +1,12 @@
 import { useRecoilValue } from "recoil";
 import { loadingAtom } from "../../store/atoms/loadingStore";
+import { MouseEvent } from "react";
 
 
-export const SignButton = ({title, onClick}:{
-    title:string,
-    onClick: ()=>void
-})=>{
+export const SignButton = ({title, onClick}: {
+    title: string,
+    onClick: (e: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+}) => {
     const loading = useRecoilValue(loadingAtom)
 
     return <button onClick={onClick}

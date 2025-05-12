@@ -3,7 +3,6 @@ import { WiStars } from "react-icons/wi";
 import { useRecoilState } from "recoil";
 import { aiPrompt, aiResLoading, aiResponse } from "../store/atoms/aiPromptAction";
 import axios from "axios";
-import { PiMoonStars } from "react-icons/pi";
 
 
 interface Content {
@@ -14,7 +13,7 @@ interface Content {
     tags?: string[];
   }
 
-  const extractYouTubeId = (url: string): string | null => {
+  const extractYouTubeId = (url: any): string | null => {
     const match = url?.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/);
     return match ? match[1] : null;
   };
@@ -55,9 +54,6 @@ interface Content {
             </div>
           </div>
           <h3 className="font-semibold text-sm text-gray-800 line-clamp-2">{content.title}</h3>
-          {content.description && (
-            <p className="text-xs text-gray-600 line-clamp-2">{content.description}</p>
-          )}
         </div>
       );
     }
@@ -105,9 +101,6 @@ interface Content {
             </svg>
             <h3 className="font-medium text-base">{content.title}</h3>
           </div>
-          {content.description && (
-            <p className="text-sm text-gray-600 mb-2 line-clamp-2">{content.description}</p>
-          )}
           {content.tags && content.tags.length > 0 && (
             <div className="flex flex-wrap gap-1">
               {content.tags.map((tag, index) => (
@@ -153,9 +146,6 @@ interface Content {
         className="flex flex-col bg- hover:bg-myBlue cursor-pointer rounded-xl p-4 transition-all duration-300 border border-gray-200"
       >
         <h3 className="font-medium text-base mb-2">{content.title}</h3>
-        {content.description && (
-          <p className="text-sm text-gray-600 mb-2">{content.description}</p>
-        )}
         {content.tags && content.tags.length > 0 && (
           <div className="flex flex-wrap gap-1">
             {content.tags.map((tag, index) => (
@@ -218,7 +208,7 @@ interface Content {
     const handleAiButtonClick = (index: number, e: React.MouseEvent) => {
         e.stopPropagation(); // Prevent the card's onClick from triggering
         setClickedContentId(clickedContentId === index ? null : index);
-        setAiResult(null)
+        setAiResult("")
     };
 
     const handleAiSearch = async(title:string)=>{

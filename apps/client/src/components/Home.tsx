@@ -1,4 +1,3 @@
-import React from 'react'
 import Navbar from './HomePage/Navbar'
 import Hero from './HomePage/Hero'
 import Footer from './Footer'

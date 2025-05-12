@@ -1,6 +1,11 @@
 import { useNavigate } from "react-router-dom";
 
-const Button = (props) => {
+const Button = (props:
+    {
+        title:string,
+        routeTo:string,
+        children?:React.ReactNode
+    }) => {
   const { title, routeTo } = props;
   const navigate = useNavigate();
   return (

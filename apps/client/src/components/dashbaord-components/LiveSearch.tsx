@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { useRecoilValue } from "recoil";
 import { contentAtom } from "../../store/atoms/contentStore";
-import { WiStars } from "react-icons/wi";
+
 
 interface Content {
   title: string;
@@ -22,7 +22,7 @@ const LiveSearch = () => {
     useEffect(() => {
         // Filter contents based on search query
         if (searchQuery.trim()) {
-            const results = contents.filter(content =>
+            const results = contents.filter((content:Content) =>
                 content.title.toLowerCase().includes(searchQuery.toLowerCase())
             );
             setFilteredResults(results);
@@ -64,9 +64,6 @@ const LiveSearch = () => {
         setShowResults(false);
         setSearchQuery("");
     };
-    const handleAiClick = async(content:contentType)=>{
-
-    }
 
     return (
         <div className="relative max-w-xl mx-auto">

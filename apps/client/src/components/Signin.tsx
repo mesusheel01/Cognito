@@ -24,7 +24,7 @@ const Signin = () => {
     const navigate = useNavigate()
     const {enqueueSnackbar} = useSnackbar()
 
-    const handleSigninClick = async (e:React.FormEvent<HTMLFormElement>)=>{
+    const handleSigninClick = async (e:React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault()
         try{
             setLoading(true)
