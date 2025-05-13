@@ -42,7 +42,7 @@ const Sidebar = () => {
     }
     const handleLogout = ()=>{
         localStorage.removeItem('token')
-        window.location.href= 'http://localhost:5173/'
+        window.location.href= 'https://cognito-client-lilac.vercel.app'
         enqueueSnackbar("Logged out!",{variant:"success"})
     }
     console.log(contentStorage)
