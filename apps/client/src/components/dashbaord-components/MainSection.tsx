@@ -15,7 +15,7 @@ const MainSection = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/v1/content", {
+      const res = await axios.get("https://cognito-05vd.onrender.com/api/v1/content", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

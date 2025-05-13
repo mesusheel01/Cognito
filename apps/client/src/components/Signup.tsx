@@ -24,7 +24,7 @@ const Signup = () => {
     const handleSignupClick = async(e : React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault()
         try{
-            const res = await axios.post(`http://localhost:5000/api/v1/user/signup`,{
+            const res = await axios.post(`https://cognito-05vd.onrender.com/api/v1/user/signup`,{
                 username,
                 email,
                 password

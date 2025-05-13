@@ -26,7 +26,7 @@ const Sidebar = () => {
             console.log("clicked: ",type )
             try {
                 const token = localStorage.getItem("token")
-                const response = await axios.get('http://localhost:5000/api/v1/content/',{
+                const response = await axios.get('https://cognito-05vd.onrender.com/api/v1/content/',{
                     headers:{
                         Authorization:`Bearer ${token}`
                     }

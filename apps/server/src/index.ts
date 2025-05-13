@@ -14,7 +14,7 @@ export const jwt_pass = process.env.JWT_SECRET
 
 //to accept the req body
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://cognito-client-lilac.vercel.app",
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -38,7 +38,7 @@ app.use('/api/v1/ai-result', aiRouter)
 //ai credential check
 //@ts-ignore
 app.get("/credential-check", async (req, res) => {
-    const result = await credentailCheckStatus();   
+    const result = await credentailCheckStatus();
     res.send(result)
 });
 

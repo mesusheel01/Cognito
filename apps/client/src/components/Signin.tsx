@@ -28,7 +28,7 @@ const Signin = () => {
         e.preventDefault()
         try{
             setLoading(true)
-            const res = await axios.post(`https://cognito-server.vercel.app/api/v1/user/signin`,({username,password}))
+            const res = await axios.post(`https://cognito-05vd.onrender.com/api/v1/user/signin`,({username,password}))
             if(res.data.token){
                 console.log(res.data.token)
                 localStorage.setItem("token", res.data.token)

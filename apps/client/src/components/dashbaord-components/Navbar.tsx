@@ -41,7 +41,7 @@ const Navbar = () => {
                 tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag !== '')
             }
 
-            const response = await axios.post('http://localhost:5000/api/v1/content',
+            const response = await axios.post('https://cognito-05vd.onrender.com/api/v1/content',
                 processedData, // Send processed data directly
                 {
                     headers: {
