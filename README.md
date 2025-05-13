@@ -18,6 +18,3 @@
 
 
 ### Dashboard page: ![alt text](images-readme/dashboard.png)
-
-
-### Dashboard page:
