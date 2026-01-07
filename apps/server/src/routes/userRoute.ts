@@ -67,7 +67,7 @@ userRouter.post("/signin" , async(req,res)=>{
             return
         }
         const token = jwt.sign({username, userId: existingUser._id}, jwt_pass as string, {expiresIn:'1h'})
-        res.status(201).json({
+        res.status(200).json({
             msg: "User signed in successfully!",
             token
         })
