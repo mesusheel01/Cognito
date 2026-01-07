@@ -14,7 +14,7 @@ export const jwt_pass = process.env.JWT_SECRET
 
 //to accept the req body
 app.use(cors({
-    origin: "https://cognito-client-lilac.vercel.app",
+    origin: "https://cognitos.vercel.app/",
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization']
