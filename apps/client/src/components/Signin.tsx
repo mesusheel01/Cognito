@@ -73,6 +73,7 @@ const Signin = () => {
                     <div>
                         <input
                         type="text"
+                        name="username"
                         value={username}
                         placeholder="Sus Daimon..."
                         onChange={(e)=>setUsername(e.target.value)}
@@ -82,6 +83,7 @@ const Signin = () => {
                     <div className="relative">
                         <input
                         type={isPassText?"text":"password"}
+                        name="password"
                         value={password}
                         placeholder="aljsy4923yurh3"
                         onChange={(e)=>setPassword(e.target.value)}
